@@ -22,7 +22,7 @@ jobs:
         id: armttkvalidation
         uses: aliencube/arm-ttk-actions@v0.3
         with:
-          path: workbook-collection/sample.json
+          path: templates/sample.json
           
       - name: Test result
         shell: bash
@@ -41,7 +41,7 @@ jobs:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}
           resourceGroupName: ${{ env.resourceGroup }}
-          template: workbook-collection/sample.json
+          template: templates/sample.json
           deploymentMode: Validate          
 
       - name: Upload Template as Build Artifact
@@ -49,12 +49,12 @@ jobs:
         with:
           name: StorageTemplate
           # A file, directory or wildcard pattern that describes what to upload
-          path: workbook-collection/sample.json
+          path: templates/sample.json
           if-no-files-found: error
 
   PROD:
     name: Deploy to PROD
-    if: github.event.ref == 'refs/heads/master'
+    if: github.event.ref == 'refs/heads/main'
     needs: [validation]
     runs-on: ubuntu-latest
       
