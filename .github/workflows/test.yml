@@ -27,7 +27,7 @@ jobs:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}
           resourceGroupName: ${{ env.resourceGroup }}
-          template: dasaeth/azure-monitor-workbooks/azuredeploy.json
+          template: azure-monitor-workbooks/azuredeploy.json
           deploymentMode: Validate          
 
       - name: Upload Template as Build Artifact
@@ -35,7 +35,7 @@ jobs:
         with:
           name: StorageTemplate
           # A file, directory or wildcard pattern that describes what to upload
-          path: dasaeth/azure-monitor-workbooks/azuredeploy.json
+          path: azure-monitor-workbooks/azuredeploy.json
           if-no-files-found: error
 
   PROD:
