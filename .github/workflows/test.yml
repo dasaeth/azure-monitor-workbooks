@@ -82,7 +82,7 @@ jobs:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}          
           resourceGroupName: ${{ env.resourceGroup }}
-          template: ./templates/w1.json
+          template: w1.json
           deploymentMode: Incremental
 
       - name: Deploy ARM Template 2
@@ -92,7 +92,7 @@ jobs:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}          
           resourceGroupName: ${{ env.resourceGroup }}
-          template: ./templates/w2.json
+          template: w2.json
           deploymentMode: Incremental
           
       - name: Deploy ARM Template 3
@@ -102,5 +102,5 @@ jobs:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}          
           resourceGroupName: ${{ env.resourceGroup }}
-          template: ./templates/w3.json
+          template: w3.json
           deploymentMode: Incremental
