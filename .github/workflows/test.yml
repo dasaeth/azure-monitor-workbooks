@@ -14,7 +14,9 @@ jobs:
   validation:
     name: Validations
     runs-on: ubuntu-latest
-    
+    strategy:
+      matrix:
+        file: ['w1.json','w2.json','w3.json']
     steps:        
       - uses: actions/checkout@master
     
@@ -29,27 +31,9 @@ jobs:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}
           resourceGroupName: ${{ env.resourceGroup }}
-          template: ./templates/w1.json
-          deploymentMode: Validate          
+          template: ./templates/${{ matrix.file }}
+          deploymentMode: Validate                          
           
-      - name: Validate ARM Template 2
-        uses: Azure/arm-deploy@v1
-        with:
-          scope: resourcegroup
-          subscriptionId: ${{ secrets.SUBSCRIPTIONID }}
-          resourceGroupName: ${{ env.resourceGroup }}
-          template: ./templates/w2.json
-          deploymentMode: Validate          
-
-      - name: Validate ARM Template 3
-        uses: Azure/arm-deploy@v1
-        with:
-          scope: resourcegroup
-          subscriptionId: ${{ secrets.SUBSCRIPTIONID }}
-          resourceGroupName: ${{ env.resourceGroup }}
-          template: ./templates/w3.json
-          deploymentMode: Validate
-
       - name: Upload Template as Build Artifact
         uses: actions/upload-artifact@v2.2.2
         with:
@@ -63,7 +47,9 @@ jobs:
     if: github.event.ref == 'refs/heads/main'
     needs: [validation]
     runs-on: ubuntu-latest
-      
+    strategy:
+      matrix:
+        file: ['w1.json','w2.json','w3.json']
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.8
@@ -75,32 +61,12 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-      - name: Deploy ARM Template 1
+      - name: Deploy ARM Template 
         id: deployArmProd1
         uses: Azure/arm-deploy@v1
         with:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}          
           resourceGroupName: ${{ env.resourceGroup }}
-          template: w1.json
-          deploymentMode: Incremental
-
-      - name: Deploy ARM Template 2
-        id: deployArmProd2
-        uses: Azure/arm-deploy@v1
-        with:
-          scope: resourcegroup
-          subscriptionId: ${{ secrets.SUBSCRIPTIONID }}          
-          resourceGroupName: ${{ env.resourceGroup }}
-          template: w2.json
-          deploymentMode: Incremental
-          
-      - name: Deploy ARM Template 3
-        id: deployArmProd3
-        uses: Azure/arm-deploy@v1
-        with:
-          scope: resourcegroup
-          subscriptionId: ${{ secrets.SUBSCRIPTIONID }}          
-          resourceGroupName: ${{ env.resourceGroup }}
-          template: w3.json
+          template: ${{ matrix.file }}
           deploymentMode: Incremental
