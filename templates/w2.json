@@ -4,7 +4,7 @@
     "parameters": {
         "workbookDisplayName":  {             
             "type":"string",
-            "defaultValue": "My Workbook",
+            "defaultValue": "Workbook Two",
             "metadata": {
                 "description": "The friendly name for the workbook that is used in the Gallery or Saved List. Needs to be unique in the scope of the resource group and source" 
             }
