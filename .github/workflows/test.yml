@@ -27,7 +27,7 @@ jobs:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}
           resourceGroupName: ${{ env.resourceGroup }}
-          template: azure-monitor-workbooks/templates/sample.json
+          template: sample.json
           deploymentMode: Validate          
 
       - name: Upload Template as Build Artifact
