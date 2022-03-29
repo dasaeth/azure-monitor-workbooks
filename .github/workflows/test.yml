@@ -15,25 +15,11 @@ jobs:
     name: Validations
     runs-on: ubuntu-latest
     
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: ARM Template Toolkit (ARM TTK) Validation    
-        id: armttkvalidation
-        uses: aliencube/arm-ttk-actions@v0.3
+    steps:        
+      - name: Azure Login
+        uses: Azure/login@v1
         with:
-          path: templates/sample.json
-          
-      - name: Test result
-        shell: bash
-        continue-on-error: true
-        run: |
-          echo "${{ toJSON(fromJSON(steps.armttkvalidation.outputs.results)) }}"
-        
-      - name: Login to Azure
-        uses: azure/login@v1.1
-        with:
-          cred: ${{ secrets.AZURE_CREDENTIALS }}           
+          creds: ${{ secrets.AZURE_CREDENTIALS }}           
         
       - name: Validate ARM Template
         uses: Azure/arm-deploy@v1
