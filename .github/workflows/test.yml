@@ -64,5 +64,5 @@ jobs:
           scope: resourcegroup
           subscriptionId: ${{ secrets.SUBSCRIPTIONID }}          
           resourceGroupName: ${{ env.resourceGroup }}
-          template: sample.json
+          template: azuredeploy.json
           deploymentMode: Incremental
